@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-amenities
+      author: "Ilya Seredich"
+      changes:
+        - createTable:
+            tableName: amenities
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true

@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-hotels
+      author: "Ilya Seredich"
+      changes:
+        - createTable:
+            tableName: hotels
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(2000)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: brand
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: house_number
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: street
+                  type: varchar(150)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: country
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: post_code
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: check_in
+                  type: time
+                  constraints:
+                    nullable: false
+              - column:
+                  name: check_out
+                  type: time
+                  constraints:
+                    nullable: true
