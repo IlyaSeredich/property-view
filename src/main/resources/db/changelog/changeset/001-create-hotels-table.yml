@@ -73,3 +73,6 @@ databaseChangeLog:
                   type: time
                   constraints:
                     nullable: true
+        - addUniqueConstraint:
+            tableName: hotels
+            columnNames: house_number, street, city, country, post_code

@@ -22,13 +22,14 @@ public class Hotel {
 
     @Column(nullable = false)
     private String brand;
+
     private String description;
 
     @Embedded
     private Address address;
 
     @Embedded
-    private Contact contact;
+    private Contact contacts;
 
     @Embedded
     private ArrivalTime arrivalTime;
