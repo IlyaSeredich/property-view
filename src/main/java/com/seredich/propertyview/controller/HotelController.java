@@ -1,8 +1,6 @@
 package com.seredich.propertyview.controller;
 
-import com.seredich.propertyview.dto.HotelCreateDto;
-import com.seredich.propertyview.dto.HotelDetailDto;
-import com.seredich.propertyview.dto.HotelSummaryDto;
+import com.seredich.propertyview.dto.*;
 import com.seredich.propertyview.service.HotelService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,8 +17,8 @@ public class HotelController {
 
     @GetMapping("/hotels")
     public ResponseEntity<List<HotelSummaryDto>> getAll() {
-        List<HotelSummaryDto> allHotels = hotelService.getAllHotels();
-        return ResponseEntity.ok(allHotels);
+        List<HotelSummaryDto> hotelSummaryDtoList = hotelService.getAllHotels();
+        return ResponseEntity.ok(hotelSummaryDtoList);
     }
 
     @PostMapping("/hotels")
@@ -33,5 +31,17 @@ public class HotelController {
     public ResponseEntity<HotelDetailDto> get(@PathVariable Long id) {
         HotelDetailDto hotelDetailDto = hotelService.getHotel(id);
         return ResponseEntity.ok(hotelDetailDto);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<HotelSummaryDto>> search(@ModelAttribute SearchHotelDto searchHotelDto) {
+        List<HotelSummaryDto> hotelSummaryDtoList = hotelService.searchHotels(searchHotelDto);
+        return ResponseEntity.ok(hotelSummaryDtoList);
+    }
+
+    @PostMapping("/hotels/{id}/amenities")
+    public ResponseEntity<Void> addAmenities(@PathVariable Long id, @RequestBody List<String> amenityNamesToAdd) {
+        hotelService.addAmenities(id, amenityNamesToAdd);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

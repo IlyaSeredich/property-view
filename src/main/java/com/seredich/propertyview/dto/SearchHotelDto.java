@@ -7,6 +7,6 @@ public record SearchHotelDto(
         String brand,
         String city,
         String country,
-        List<AmenityDto> amenities
+        List<String> amenities
 ) {
 }

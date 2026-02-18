@@ -7,6 +7,8 @@ import com.seredich.propertyview.entity.Hotel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface HotelMapper {
 
@@ -20,14 +22,15 @@ public interface HotelMapper {
     @Mapping(target = "contacts.email", source = "contacts.email")
     Hotel toEntity(HotelCreateDto hotelCreateDto);
 
-    @Mapping(target = "address.houseNumber", source = "address.houseNumber")
-    @Mapping(target = "address.street", source = "address.street")
-    @Mapping(target = "address.city", source = "address.city")
-    @Mapping(target = "address.country", source = "address.country")
-    @Mapping(target = "address.postCode", source = "address.postCode")
-    @Mapping(target = "contacts.phone", source = "contacts.phone")
-    @Mapping(target = "contacts.email", source = "contacts.email")
-    @Mapping(target = "arrivalTime.checkIn", source = "arrivalTime.checkIn")
-    @Mapping(target = "arrivalTime.checkOut", source = "arrivalTime.checkOut")
-    HotelDetailDto toDetailDto(Hotel hotel);
+    @Mapping(target = "address.houseNumber", source = "hotel.address.houseNumber")
+    @Mapping(target = "address.street", source = "hotel.address.street")
+    @Mapping(target = "address.city", source = "hotel.address.city")
+    @Mapping(target = "address.country", source = "hotel.address.country")
+    @Mapping(target = "address.postCode", source = "hotel.address.postCode")
+    @Mapping(target = "contacts.phone", source = "hotel.contacts.phone")
+    @Mapping(target = "contacts.email", source = "hotel.contacts.email")
+    @Mapping(target = "arrivalTime.checkIn", source = "hotel.arrivalTime.checkIn")
+    @Mapping(target = "arrivalTime.checkOut", source = "hotel.arrivalTime.checkOut")
+    @Mapping(target = "amenities", source = "amenityNamesList")
+    HotelDetailDto toDetailDto(Hotel hotel, List<String> amenityNamesList);
 }

@@ -10,6 +10,6 @@ public record HotelDetailDto(
         AddressDto address,
         ContactDto contacts,
         ArrivalTimeDto arrivalTime,
-        List<AmenityDto> amenities
+        List<String> amenities
 ) {
 }
