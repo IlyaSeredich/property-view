@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/property-view")
@@ -37,6 +38,13 @@ public class HotelController {
     public ResponseEntity<List<HotelSummaryDto>> search(@ModelAttribute SearchHotelDto searchHotelDto) {
         List<HotelSummaryDto> hotelSummaryDtoList = hotelService.searchHotels(searchHotelDto);
         return ResponseEntity.ok(hotelSummaryDtoList);
+    }
+
+    @GetMapping("/histogram/{param}")
+    public ResponseEntity<Map<String, Long>> getHistogram(@PathVariable String param) {
+        Map<String, Long> histogramMap = hotelService.getHistogram(param);
+        return ResponseEntity.ok(histogramMap);
+
     }
 
     @PostMapping("/hotels/{id}/amenities")

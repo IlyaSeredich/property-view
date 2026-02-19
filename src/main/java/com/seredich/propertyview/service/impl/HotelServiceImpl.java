@@ -1,6 +1,9 @@
 package com.seredich.propertyview.service.impl;
 
-import com.seredich.propertyview.dto.*;
+import com.seredich.propertyview.dto.HotelCreateDto;
+import com.seredich.propertyview.dto.HotelDetailDto;
+import com.seredich.propertyview.dto.HotelSummaryDto;
+import com.seredich.propertyview.dto.SearchHotelDto;
 import com.seredich.propertyview.entity.Address;
 import com.seredich.propertyview.entity.Amenity;
 import com.seredich.propertyview.entity.Hotel;
@@ -15,7 +18,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -59,6 +64,45 @@ public class HotelServiceImpl implements HotelService {
         Specification<Hotel> specification = HotelSpecification.build(searchHotelDto);
         List<Hotel> searchedHotels = hotelRepository.findAll(specification);
         return mapToSummaryDtoList(searchedHotels);
+    }
+
+    @Override
+    public Map<String, Long> getHistogram(String param) {
+        return switch (param.toLowerCase()) {
+            case "brand" -> histogramByBrand();
+            case "city" -> histogramByCity();
+            case "country" -> histogramByCountry();
+            case "amenities" -> histogramByAmenity();
+            default -> throw new RuntimeException();
+        };
+    }
+
+    private Map<String, Long> histogramByAmenity() {
+        List<Object[]> amenityCounts = hotelRepository.countByAmenity();
+        return toMap(amenityCounts);
+    }
+
+    private Map<String, Long> histogramByCountry() {
+        List<Object[]> countryCounts = hotelRepository.countByCountry();
+        return toMap(countryCounts);
+    }
+
+    private Map<String, Long> histogramByCity() {
+        List<Object[]> cityCounts = hotelRepository.countByCity();
+        return toMap(cityCounts);
+    }
+
+    private Map<String, Long> histogramByBrand() {
+        List<Object[]> brandCounts = hotelRepository.countByBrand();
+        return toMap(brandCounts);
+    }
+
+    private Map<String, Long> toMap(List<Object[]> rows) {
+        return rows.stream()
+                .collect(Collectors.toMap(
+                        key -> (String) key[0],
+                        value -> (Long) value[1]
+                ));
     }
 
     private List<HotelSummaryDto> mapToSummaryDtoList(List<Hotel> hotels) {

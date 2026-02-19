@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 public interface HotelService {
     List<HotelSummaryDto> getAllHotels();
@@ -16,4 +17,5 @@ public interface HotelService {
     HotelDetailDto getHotel(Long id);
     void addAmenities(Long id, List<String> amenities);
     List<HotelSummaryDto> searchHotels(SearchHotelDto searchHotelDto);
+    Map<String, Long> getHistogram(String param);
 }
