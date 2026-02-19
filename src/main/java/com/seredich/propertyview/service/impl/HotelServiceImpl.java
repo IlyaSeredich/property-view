@@ -15,11 +15,12 @@ import com.seredich.propertyview.specification.HotelSpecification;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,15 +46,15 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public HotelDetailDto getHotel(Long id) {
-        Optional<Hotel> hotel = hotelRepository.findById(id);
-        List<String> amenityNamesList = amenityService.getAmenityNameList(hotel.get().getAmenities());
-        return hotelMapper.toDetailDto(hotel.get(), amenityNamesList);
+        Hotel hotel = findHotel(id);
+        List<String> amenityNamesList = amenityService.getAmenityNameList(hotel.getAmenities());
+        return hotelMapper.toDetailDto(hotel, amenityNamesList);
     }
 
     @Override
     @Transactional
     public void addAmenities(Long id, List<String> amenityNamesToAdd) {
-        Hotel hotel = hotelRepository.findById(id).get();
+        Hotel hotel = findHotel(id);
         List<Amenity> hotelsAmenities = hotel.getAmenities();
         List<Amenity> preparedAmenities = amenityService.getPreparedAmenities(hotelsAmenities, amenityNamesToAdd);
         hotelsAmenities.addAll(preparedAmenities);
@@ -75,6 +76,11 @@ public class HotelServiceImpl implements HotelService {
             case "amenities" -> histogramByAmenity();
             default -> throw new RuntimeException();
         };
+    }
+
+    private Hotel findHotel(Long id) {
+        return hotelRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, String.format("Hotel with id %d not found", id)));
     }
 
     private Map<String, Long> histogramByAmenity() {
