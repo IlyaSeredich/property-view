@@ -3,19 +3,13 @@ package com.seredich.propertyview.specification;
 import com.seredich.propertyview.dto.SearchHotelDto;
 import com.seredich.propertyview.entity.Amenity;
 import com.seredich.propertyview.entity.Hotel;
-import com.seredich.propertyview.service.AmenityService;
 import jakarta.persistence.criteria.*;
-import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-@AllArgsConstructor
 public class HotelSpecification {
-    private final AmenityService amenityService;
 
     public static Specification<Hotel> build(SearchHotelDto searchHotelDto) {
         return (root, query, criteriaBuilder) -> {

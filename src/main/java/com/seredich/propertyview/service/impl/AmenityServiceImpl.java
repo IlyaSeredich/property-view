@@ -7,9 +7,7 @@ import com.seredich.propertyview.service.AmenityService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -25,11 +23,7 @@ public class AmenityServiceImpl implements AmenityService {
 
     @Override
     public List<String> getAmenityNameList(List<Amenity> amenities) {
-        return amenities.stream().map(amenity -> amenity.getName()).toList();
-    }
-
-    public Optional<Amenity> findAmenity(String name) {
-        return amenityRepository.findByNameIgnoreCase(name);
+        return amenities.stream().map(Amenity::getName).toList();
     }
 
     private List<Amenity> addAmenities(List<String> amenitiesToAdd) {

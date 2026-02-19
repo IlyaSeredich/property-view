@@ -1,12 +1,9 @@
 package com.seredich.propertyview.service;
 
-import com.seredich.propertyview.dto.*;
-import com.seredich.propertyview.entity.Address;
-import com.seredich.propertyview.entity.Hotel;
-import com.seredich.propertyview.mapper.HotelMapper;
-import com.seredich.propertyview.repository.HotelRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.seredich.propertyview.dto.HotelCreateDto;
+import com.seredich.propertyview.dto.HotelDetailDto;
+import com.seredich.propertyview.dto.HotelSummaryDto;
+import com.seredich.propertyview.dto.SearchHotelDto;
 
 import java.util.List;
 import java.util.Map;

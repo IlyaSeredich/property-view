@@ -1,6 +1,5 @@
 package com.seredich.propertyview.repository;
 
-import com.seredich.propertyview.dto.HistogramDto;
 import com.seredich.propertyview.entity.Hotel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
